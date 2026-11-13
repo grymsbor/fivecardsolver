@@ -1,6 +1,6 @@
 # Five-card draw CFR solver
 
-Chance-sampled Counterfactual Regret Minimisation (CFR, with an optional CFR+ mode) for heads-up, fixed-limit five-card draw on reduced decks. This is the code behind our COMP3821 progression check (`progress_check.md`; figures in `figures/`, raw results in `results/`).
+Counterfactual Regret Minimisation for heads-up, fixed-limit five-card draw on reduced decks, with a vectorised best-response computation that gives a lower bound on exploitability. This is the code behind our COMP3821 project (final report in `report/`, figures in `figures/`, raw results in `results/`).
 
 ## The game
 
@@ -12,7 +12,7 @@ Chance-sampled Counterfactual Regret Minimisation (CFR, with an optional CFR+ mo
 ## Abstractions (what makes it solvable)
 
 - **Discards.** A player chooses only *how many* cards to draw, from 0 to 3. Which cards go is fixed by `game.keep_cards`: paired cards are kept first, then four-card flush or straight draws, then the highest cards.
-- **Cards.** Information sets use hand buckets, not exact cards. Before the draw, a bucket is the category, its main rank and a draw flag. After the draw, it is the category and its top two tie-break ranks. The post-draw bucket forgets the pre-draw hand, so the abstract game has *imperfect recall* (Waugh et al., 2009b).
+- **Cards.** Information sets use hand buckets, not exact cards. Before the draw, a bucket is the category, its main rank and a draw flag. After the draw, it is the category and its top two tie-break ranks. The post-draw bucket forgets the pre-draw hand, so the abstract game has *imperfect recall* (Waugh et al., 2009b). `--fine` adds one more tie-break rank to each bucket.
 
 ## Layout
 
@@ -20,24 +20,39 @@ Chance-sampled Counterfactual Regret Minimisation (CFR, with an optional CFR+ mo
 | --- | --- |
 | `fcd/cards.py` | Decks, reduced-deck ranking, hand evaluator with tie-breaks |
 | `fcd/game.py` | Betting rules, discard rule, card buckets, one sampled deal |
-| `fcd/cfr.py` | Chance-sampled CFR / CFR+ trainer |
+| `fcd/cfr.py` | CFR trainer: chance or external sampling; CFR+ or either of its ingredients (regret floor, linear averaging) |
 | `fcd/evaluate.py` | Random and greedy baselines, exact-over-actions EV, behaviour statistics |
-| `run_experiments.py` | `train` and `analyse` commands |
-| `make_plots.py` | Figures from `results/` |
-| `tests/test_engine.py` | Evaluator and rules tests |
+| `fcd/br.py` | Vectorised best response over the public tree; exploitability (exact when all deals are supplied) |
+| `fcd/vgame.py` | Five-card draw as a vectorised game for `br.py` |
+| `kuhn_cfr.py` | CFR on Kuhn poker with brute-force exploitability (validation) |
+| `run_experiments.py` | `train`, `analyse` and `exploit` commands |
+| `queues/` | Experiment run queues (`run_queue.sh`, `queue_[a-d].txt`, `chain.sh`) |
+| `make_final_plots.py` | Report figures and `results/summary.json` |
+| `scripts/` | Sample-size check for the best response; feature-cache builder |
+| `tests/` | Evaluator, rules and best-response tests |
+| `report/` | Final report source (`body_*.tex`, `behaviour.tex`), `build_report.py` (fills every number from `results/summary.json`), `final_report.tex/.pdf`, and `poster_content.md` |
+
+## Exploitability lower bound
+
+`run_experiments.py exploit` fits a best response for each player on 1,000,000 sampled deals and evaluates that fixed policy on 300,000 independent deals. The best responder sees its own cards through the base buckets *with perfect recall*. A fixed policy cannot beat the true best response, so the out-of-sample value is an unbiased estimate of a lower bound on exploitability. `tests/test_br.py` checks the same code against brute force on Kuhn poker, where it is exact.
 
 ## Reproducing the results
 
-Requires Python 3.10+ and matplotlib (for plots only).
+Requires Python 3.10+, NumPy, and matplotlib (for plots only).
 
 ```
 python tests/test_engine.py
-python run_experiments.py train --ranks 6 --iters 150000 --tag cfr24
-python run_experiments.py train --ranks 6 --iters 150000 --plus --tag cfrplus24
-python run_experiments.py train --ranks 5 --iters 100000 --tag cfr20
-python run_experiments.py train --ranks 7 --iters 100000 --tag cfr28
-for t in cfr24 cfrplus24 cfr20 cfr28; do python run_experiments.py analyse --tag $t; done
-python make_plots.py
+python tests/test_br.py
+python kuhn_cfr.py --csv results/kuhn_convergence.csv
+bash queues/run_queue.sh queues/queue_a.txt &        # training (one queue per core)
+bash queues/run_queue.sh queues/queue_b.txt
+python scripts/build_feature_cache.py
+bash queues/run_queue.sh queues/queue_c.txt &        # exploitability and behaviour analysis
+bash queues/run_queue.sh queues/queue_d.txt
+python make_final_plots.py
+cd report && python build_report.py && latexmk -pdf final_report.tex
 ```
 
-Each 24-card run takes about 15 minutes on one laptop core. Seeds are fixed, so the results reproduce exactly.
+A 24-card CFR run takes about 10 minutes on one core. The full set takes about five hours on two cores. Seeds are fixed, so the results reproduce exactly. Trained strategies (`results/*.pkl`), checkpoint snapshots (`results/snap/`) and cached deal features (`results/features/`) are large and are regenerated by the commands above, so they are not included in the zip.
+
+The progression-check results (`results/cfr24_*`, `cfrplus24_*`, `cfr20_*`, `cfr28_*` without a seed suffix) are kept for reference. `cfr24` and `cfrplus24` are identical to the seed-0 runs `cfr24_s0` and `cfrplus24_s0`.
