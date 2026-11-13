@@ -1,0 +1,10 @@
+train --ranks 6 --iters 150000 --snapshots --no-eval --seed 1 --tag cfr24_s1
+train --ranks 6 --iters 150000 --snapshots --no-eval --seed 1 --plus --tag cfrplus24_s1
+train --ranks 6 --iters 800000 --every 50000 --snapshots --no-eval --seed 1 --external --tag es24_s1
+train --ranks 6 --iters 150000 --snapshots --no-eval --seed 1 --rm-plus --tag rmplus24_s1
+train --ranks 6 --iters 150000 --snapshots --no-eval --seed 1 --linear --tag linear24_s1
+train --ranks 5 --iters 150000 --no-eval --seed 1 --tag cfr20_s1
+train --ranks 7 --iters 150000 --no-eval --seed 1 --tag cfr28_s1
+train --ranks 5 --iters 150000 --no-eval --seed 2 --tag cfr20_s2
+train --ranks 7 --iters 150000 --no-eval --seed 2 --tag cfr28_s2
+train --ranks 6 --iters 150000 --snapshots --no-eval --seed 1 --fine --tag fine24_s1

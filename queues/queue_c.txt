@@ -1,0 +1,18 @@
+exploit --tag cfr24_s0 --snapshots --curve-iters 10000,20000,40000,80000,150000
+exploit --tag cfrplus24_s0 --snapshots --curve-iters 10000,20000,40000,80000,150000
+exploit --tag es24_s0 --snapshots --curve-iters 50000,100000,200000,400000,800000
+exploit --tag rmplus24_s0 --snapshots --curve-iters 10000,20000,40000,80000,150000
+exploit --tag linear24_s0 --snapshots --curve-iters 10000,20000,40000,80000,150000
+exploit --tag fine24_s0 --snapshots --curve-iters 10000,20000,40000,80000,150000
+exploit --tag cfr20_s0
+exploit --tag cfr28_s0
+exploit --tag cfr24_s2 --snapshots --curve-iters 10000,20000,40000,80000,150000
+exploit --tag cfrplus24_s2 --snapshots --curve-iters 10000,20000,40000,80000,150000
+exploit --tag es24_s2 --snapshots --curve-iters 50000,100000,200000,400000,800000
+exploit --tag cfr20_s2
+analyse --tag cfr24_s2
+analyse --tag cfr20_s0
+analyse --tag cfr28_s0
+analyse --tag es24_s0
+analyse --tag cfr20_s2
+analyse --tag es24_s2
