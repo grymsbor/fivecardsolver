@@ -13,7 +13,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 R, F = "results", "figures"
-GREY, BLUE, LIGHT = "#9a9a9a", "#2a6fdb", "#c9d8f5"
+# greyscale
+GREY, BLUE, LIGHT = "#8c8c8c", "#000000", "#d9d9d9"
 
 
 def curve(tag):
@@ -28,14 +29,14 @@ def analysis(tag):
 
 def fig_convergence():
     fig, axes = plt.subplots(1, 2, figsize=(10, 3.8))
-    for tag, name, col in [("cfr24", "CFR", GREY), ("cfrplus24", "CFR+", BLUE)]:
+    for tag, name, col, mk, ls in [("cfr24", "CFR", BLUE, "o", "-"), ("cfrplus24", "CFR+", GREY, "s", "--")]:
         rows = curve(tag)
         t = [int(r["iteration"]) for r in rows]
         g = [float(r["vs_greedy"]) for r in rows]
         se = [float(r["vs_greedy_se"]) for r in rows]
-        axes[0].errorbar(t, g, yerr=[1.96 * s for s in se], marker="o", ms=3, capsize=2, color=col, label=name)
+        axes[0].errorbar(t, g, yerr=[1.96 * s for s in se], marker=mk, ls=ls, ms=3, capsize=2, color=col, label=name)
         ch = [float(r["strategy_change"]) for r in rows[1:]]
-        axes[1].plot(t[1:], ch, marker="o", ms=3, color=col, label=name)
+        axes[1].plot(t[1:], ch, marker=mk, ls=ls, ms=3, color=col, label=name)
     axes[0].axhline(0, color="black", lw=0.8)
     axes[0].set_xlabel("Iterations")
     axes[0].set_ylabel("Chips per hand vs Greedy (95% CI)")
@@ -73,12 +74,12 @@ def fig_draws():
     a = analysis("cfr24")
     order = [c for c in ["High card", "One pair", "Two pair", "Three of a kind", "Straight",
                          "Full house", "Flush"] if c in a["draw_by_category"]]
-    shades = ["#1f4fa0", "#4d7fd0", "#8fb0e6", "#d3e0f6"]
+    shades = ["#262626", "#666666", "#a6a6a6", "#e0e0e0"]
     fig, ax = plt.subplots(figsize=(7.5, 3.8))
     left = [0.0] * len(order)
     for k in range(4):
         vals = [a["draw_by_category"][c].get(str(k), 0.0) for c in order]
-        ax.barh(order, vals, left=left, color=shades[k], label=f"draw {k}")
+        ax.barh(order, vals, left=left, color=shades[k], edgecolor="black", linewidth=0.4, label=f"draw {k}")
         for i, v in enumerate(vals):
             if v > 0.07:
                 ax.text(left[i] + v / 2, i, f"{v:.0%}", ha="center", va="center", fontsize=8,
