@@ -1,0 +1,15 @@
+{'iteration': 10000, 'seconds': 61.2, 'train_seconds': 61.1, 'touched': 12350000, 'infosets': 57951, 'strategy_change': nan, 'unseen_lookups': 0}
+{'iteration': 20000, 'seconds': 124.0, 'train_seconds': 123.7, 'touched': 24700000, 'infosets': 60067, 'strategy_change': 0.096, 'unseen_lookups': 0}
+{'iteration': 30000, 'seconds': 185.1, 'train_seconds': 184.7, 'touched': 37050000, 'infosets': 60517, 'strategy_change': 0.0566, 'unseen_lookups': 0}
+{'iteration': 40000, 'seconds': 246.5, 'train_seconds': 245.8, 'touched': 49400000, 'infosets': 60667, 'strategy_change': 0.0374, 'unseen_lookups': 0}
+{'iteration': 50000, 'seconds': 309.0, 'train_seconds': 308.0, 'touched': 61750000, 'infosets': 60757, 'strategy_change': 0.0278, 'unseen_lookups': 0}
+{'iteration': 60000, 'seconds': 371.2, 'train_seconds': 370.0, 'touched': 74100000, 'infosets': 60757, 'strategy_change': 0.022, 'unseen_lookups': 0}
+{'iteration': 70000, 'seconds': 432.6, 'train_seconds': 431.2, 'touched': 86450000, 'infosets': 60757, 'strategy_change': 0.0185, 'unseen_lookups': 0}
+{'iteration': 80000, 'seconds': 495.0, 'train_seconds': 493.3, 'touched': 98800000, 'infosets': 60772, 'strategy_change': 0.0143, 'unseen_lookups': 0}
+{'iteration': 90000, 'seconds': 558.3, 'train_seconds': 556.3, 'touched': 111150000, 'infosets': 60772, 'strategy_change': 0.012, 'unseen_lookups': 0}
+{'iteration': 100000, 'seconds': 621.4, 'train_seconds': 619.2, 'touched': 123500000, 'infosets': 60772, 'strategy_change': 0.0116, 'unseen_lookups': 0}
+{'iteration': 110000, 'seconds': 684.2, 'train_seconds': 681.8, 'touched': 135850000, 'infosets': 60772, 'strategy_change': 0.0104, 'unseen_lookups': 0}
+{'iteration': 120000, 'seconds': 745.7, 'train_seconds': 743.1, 'touched': 148200000, 'infosets': 60772, 'strategy_change': 0.0095, 'unseen_lookups': 0}
+{'iteration': 130000, 'seconds': 806.2, 'train_seconds': 803.3, 'touched': 160550000, 'infosets': 60802, 'strategy_change': 0.0086, 'unseen_lookups': 0}
+{'iteration': 140000, 'seconds': 867.8, 'train_seconds': 864.6, 'touched': 172900000, 'infosets': 60802, 'strategy_change': 0.0075, 'unseen_lookups': 0}
+{'iteration': 150000, 'seconds': 930.6, 'train_seconds': 927.1, 'touched': 185250000, 'infosets': 60817, 'strategy_change': 0.0071, 'unseen_lookups': 0}

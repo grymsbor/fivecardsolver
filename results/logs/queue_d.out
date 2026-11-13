@@ -1,0 +1,20 @@
+skip exploit cfr24_s1
+skip exploit cfrplus24_s1
+skip exploit es24_s1
+skip exploit rmplus24_s1
+START exploit linear24_s1 18:00:20
+DONE exploit linear24_s1 18:13:05
+START exploit fine24_s1 18:13:05
+DONE exploit fine24_s1 18:30:01
+skip exploit cfr20_s1
+skip exploit cfr28_s1
+skip exploit cfr28_s2
+START analyse cfr24_s1 18:30:01
+DONE analyse cfr24_s1 18:34:50
+START analyse fine24_s0 18:34:50
+DONE analyse fine24_s0 18:39:48
+skip analyse cfr20_s1
+skip analyse cfr28_s1
+skip analyse cfr28_s2
+skip analyse es24_s1
+skip analyse fine24_s1

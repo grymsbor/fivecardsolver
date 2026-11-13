@@ -1,0 +1,156 @@
+{'iteration': 10000, 'seconds': 59.6, 'infosets': 57951, 'selfplay_p0': -0.0241, 'selfplay_se': 0.047, 'vs_random': 0.7472, 'vs_random_se': 0.0146, 'vs_greedy': -0.014, 'vs_greedy_se': 0.0277, 'strategy_change': nan, 'unseen_lookups': 2060}
+{'iteration': 20000, 'seconds': 120.6, 'infosets': 60067, 'selfplay_p0': -0.0316, 'selfplay_se': 0.048, 'vs_random': 0.7338, 'vs_random_se': 0.0155, 'vs_greedy': 0.0934, 'vs_greedy_se': 0.0268, 'strategy_change': 0.0749, 'unseen_lookups': 382}
+{'iteration': 30000, 'seconds': 183.0, 'infosets': 60517, 'selfplay_p0': -0.0457, 'selfplay_se': 0.0489, 'vs_random': 0.7274, 'vs_random_se': 0.0159, 'vs_greedy': 0.1496, 'vs_greedy_se': 0.0263, 'strategy_change': 0.0424, 'unseen_lookups': 30}
+{'iteration': 40000, 'seconds': 249.4, 'infosets': 60667, 'selfplay_p0': -0.0541, 'selfplay_se': 0.0493, 'vs_random': 0.724, 'vs_random_se': 0.016, 'vs_greedy': 0.1735, 'vs_greedy_se': 0.0258, 'strategy_change': 0.0312, 'unseen_lookups': 30}
+{'iteration': 50000, 'seconds': 307.5, 'infosets': 60757, 'selfplay_p0': -0.0597, 'selfplay_se': 0.0496, 'vs_random': 0.7218, 'vs_random_se': 0.016, 'vs_greedy': 0.1927, 'vs_greedy_se': 0.0254, 'strategy_change': 0.0229, 'unseen_lookups': 30}
+{'iteration': 60000, 'seconds': 364.6, 'infosets': 60757, 'selfplay_p0': -0.0658, 'selfplay_se': 0.0498, 'vs_random': 0.7192, 'vs_random_se': 0.016, 'vs_greedy': 0.2046, 'vs_greedy_se': 0.0249, 'strategy_change': 0.0207, 'unseen_lookups': 30}
+{'iteration': 70000, 'seconds': 424.3, 'infosets': 60757, 'selfplay_p0': -0.073, 'selfplay_se': 0.0499, 'vs_random': 0.7167, 'vs_random_se': 0.016, 'vs_greedy': 0.2069, 'vs_greedy_se': 0.0245, 'strategy_change': 0.0148, 'unseen_lookups': 30}
+{'iteration': 80000, 'seconds': 484.4, 'infosets': 60772, 'selfplay_p0': -0.0774, 'selfplay_se': 0.0501, 'vs_random': 0.7187, 'vs_random_se': 0.0161, 'vs_greedy': 0.2072, 'vs_greedy_se': 0.0242, 'strategy_change': 0.0131, 'unseen_lookups': 0}
+{'iteration': 90000, 'seconds': 550.1, 'infosets': 60772, 'selfplay_p0': -0.0796, 'selfplay_se': 0.0502, 'vs_random': 0.7154, 'vs_random_se': 0.0161, 'vs_greedy': 0.2058, 'vs_greedy_se': 0.024, 'strategy_change': 0.0097, 'unseen_lookups': 0}
+{'iteration': 100000, 'seconds': 610.2, 'infosets': 60772, 'selfplay_p0': -0.0816, 'selfplay_se': 0.0502, 'vs_random': 0.7113, 'vs_random_se': 0.0162, 'vs_greedy': 0.2109, 'vs_greedy_se': 0.0239, 'strategy_change': 0.0084, 'unseen_lookups': 0}
+{'iteration': 110000, 'seconds': 666.0, 'infosets': 60772, 'selfplay_p0': -0.0845, 'selfplay_se': 0.0502, 'vs_random': 0.7054, 'vs_random_se': 0.0162, 'vs_greedy': 0.2118, 'vs_greedy_se': 0.0236, 'strategy_change': 0.0083, 'unseen_lookups': 0}
+{'iteration': 120000, 'seconds': 722.2, 'infosets': 60772, 'selfplay_p0': -0.0861, 'selfplay_se': 0.0503, 'vs_random': 0.7041, 'vs_random_se': 0.0162, 'vs_greedy': 0.2002, 'vs_greedy_se': 0.0235, 'strategy_change': 0.0088, 'unseen_lookups': 0}
+{'iteration': 130000, 'seconds': 775.8, 'infosets': 60802, 'selfplay_p0': -0.0877, 'selfplay_se': 0.0504, 'vs_random': 0.7041, 'vs_random_se': 0.0162, 'vs_greedy': 0.1993, 'vs_greedy_se': 0.0233, 'strategy_change': 0.0066, 'unseen_lookups': 0}
+{'iteration': 140000, 'seconds': 828.1, 'infosets': 60802, 'selfplay_p0': -0.0888, 'selfplay_se': 0.0505, 'vs_random': 0.7021, 'vs_random_se': 0.0162, 'vs_greedy': 0.203, 'vs_greedy_se': 0.0233, 'strategy_change': 0.005, 'unseen_lookups': 0}
+{'iteration': 150000, 'seconds': 882.5, 'infosets': 60817, 'selfplay_p0': -0.0901, 'selfplay_se': 0.0506, 'vs_random': 0.7008, 'vs_random_se': 0.0162, 'vs_greedy': 0.21, 'vs_greedy_se': 0.0233, 'strategy_change': 0.005, 'unseen_lookups': 0}
+{
+  "config": "24-card",
+  "iters": 150000,
+  "plus": false,
+  "infosets": 60817,
+  "eval_deals": 20000,
+  "ranking_weakest_first": [
+    "High card",
+    "One pair",
+    "Two pair",
+    "Three of a kind",
+    "Straight",
+    "Full house",
+    "Four of a kind",
+    "Flush",
+    "Straight flush"
+  ],
+  "selfplay_p0": {
+    "mean": -0.06447232591368049,
+    "sd": 2.242000256572804,
+    "se": 0.01585333584844609,
+    "z": -4.066798718580098,
+    "p": 4.766337697030613e-05,
+    "n": 20000
+  },
+  "vs_random": {
+    "mean": 0.6891948486385013,
+    "sd": 0.7031861107197167,
+    "se": 0.004972276673261061,
+    "z": 138.60750194065403,
+    "p": 0.0,
+    "n": 20000
+  },
+  "vs_greedy": {
+    "mean": 0.20721578511880684,
+    "sd": 1.0435538526760548,
+    "se": 0.0073790400576058575,
+    "z": 28.0816723450663,
+    "p": 1.640313935005782e-173,
+    "n": 20000
+  },
+  "greedy_selfplay_p0": {
+    "mean": 0.01975,
+    "sd": 4.963173540395259,
+    "se": 0.035094936666191325,
+    "z": 0.5627592432450845,
+    "p": 0.5735988368122457,
+    "n": 20000
+  },
+  "draw_by_category": {
+    "Two pair": {
+      "0": 0.02230260450293396,
+      "1": 0.8853256133702149,
+      "2": 0.003768816788395558,
+      "3": 0.08860296533845562
+    },
+    "One pair": {
+      "0": 0.025607290323163116,
+      "1": 0.003557840872743633,
+      "2": 0.22165179332901408,
+      "3": 0.7491830754750791
+    },
+    "High card": {
+      "0": 0.1197708785921191,
+      "1": 0.5665558598402499,
+      "2": 0.043401064833466514,
+      "3": 0.2702721967341644
+    },
+    "Three of a kind": {
+      "0": 0.015058845116057366,
+      "1": 0.3791064730383572,
+      "2": 0.6042887943117912,
+      "3": 0.001545887533794288
+    },
+    "Straight": {
+      "0": 0.9968159688575928,
+      "1": 0.001897597921761239,
+      "2": 0.0005584658395716208,
+      "3": 0.0007279673810742568
+    },
+    "Four of a kind": {
+      "0": 0.14948091709670314,
+      "1": 0.7290046935894022,
+      "2": 0.11063763475370109,
+      "3": 0.0108767545601935
+    },
+    "Full house": {
+      "0": 0.8390662388616834,
+      "1": 0.07356217837811817,
+      "2": 0.08267277075531869,
+      "3": 0.0046988120048796775
+    },
+    "Flush": {
+      "0": 0.779154898849717,
+      "1": 0.025736193873121756,
+      "2": 0.04107240045062879,
+      "3": 0.15403650682653255
+    },
+    "Straight flush": {
+      "0": 0.8340708134249909,
+      "1": 0.051908925571288,
+      "2": 0.06494600075543056,
+      "3": 0.04907426024829053
+    }
+  },
+  "first_bet_by_final_category": {
+    "Two pair": 0.1416667761057625,
+    "One pair": 0.3169731150519879,
+    "Full house": 0.6611106343842981,
+    "Three of a kind": 0.5632207770922416,
+    "High card": 0.8952335835948804,
+    "Four of a kind": 0.6957072385758225,
+    "Straight": 0.8563359501889174,
+    "Straight flush": 0.609948885236077,
+    "Flush": 0.9268648745259987
+  },
+  "p1_response_to_bet_by_p0_draw": {
+    "0": {
+      "c": 0.3047508957392699,
+      "f": 0.5708147522211758,
+      "r": 0.12443435203955423
+    },
+    "1": {
+      "c": 0.4225542036799785,
+      "f": 0.4099502111642547,
+      "r": 0.1674955851557668
+    },
+    "2": {
+      "c": 0.343471012503029,
+      "f": 0.4137472728366655,
+      "r": 0.2427817146603054
+    },
+    "3": {
+      "c": 0.3572207912986463,
+      "f": 0.4050106990162387,
+      "r": 0.23776850968511493
+    }
+  },
+  "unseen_lookups": 41,
+  "analysis_seconds": 166.8
+}
