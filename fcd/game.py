@@ -20,12 +20,17 @@ from .cards import make_deck
 
 @dataclass(frozen=True)
 class Config:
-    n_ranks: int = 6            # 6 ranks x 4 suits = 24-card deck (9 T J Q K A)
+    # 6 ranks x 4 suits = 24-card deck (9 T J Q K A)
+    n_ranks: int = 6
     n_suits: int = 4
     ante: int = 1
-    bet_sizes: tuple = (1, 2)   # small bet before the draw, big bet after
-    cap: int = 2                # bets + raises allowed per round
+    # small bet before the draw, big bet after
+    bet_sizes: tuple = (1, 2)
+    # bets + raises allowed per round
+    cap: int = 2
     draw_options: tuple = (0, 1, 2, 3)
+    # "base" or "fine" card buckets (see pre_bucket)
+    abstraction: str = "base"
 
     @property
     def deck(self):
@@ -33,6 +38,10 @@ class Config:
 
     def label(self):
         return f"{self.n_ranks * self.n_suits}-card"
+
+    @property
+    def fine(self):
+        return getattr(self, "abstraction", "base") == "fine"
 
 
 # ---------------- Betting ----------------
@@ -98,6 +107,8 @@ def keep_cards(deck, hand, k):
 # the hand holds a four-card flush or straight draw. After the draw it records
 # the category and its top two tie-break ranks. The post-draw bucket does not
 # remember the pre-draw hand, so the abstract game has imperfect recall.
+# The "fine" abstraction (used to test abstraction sensitivity) adds one more
+# tie-break rank to each bucket.
 
 CAT_CODE = {"High card": "H", "One pair": "P", "Two pair": "2P", "Three of a kind": "T",
             "Straight": "S", "Flush": "F", "Full house": "FH", "Four of a kind": "Q",
@@ -112,19 +123,20 @@ def _tiebreak_ranks(deck, hand, cat):
     return sorted(cnt, key=lambda r: (cnt[r], r), reverse=True)
 
 
-def pre_bucket(deck, hand):
+def pre_bucket(deck, hand, fine=False):
     cat = deck.category(hand)
-    tb = _tiebreak_ranks(deck, hand, cat)
-    flag = ""
-    if cat in ("High card", "One pair"):
-        if cat == "High card" and _draw_cards(deck, hand):
-            flag = "+d"
+    tb = _tiebreak_ranks(deck, hand, cat) + [0]
+    flag = "+d" if cat == "High card" and _draw_cards(deck, hand) else ""
+    if fine:
+        return f"{CAT_CODE[cat]}{tb[0]}.{tb[1]}{flag}"
     return f"{CAT_CODE[cat]}{tb[0]}{flag}"
 
 
-def post_bucket(deck, hand):
+def post_bucket(deck, hand, fine=False):
     cat = deck.category(hand)
-    tb = _tiebreak_ranks(deck, hand, cat) + [0]
+    tb = _tiebreak_ranks(deck, hand, cat) + [0, 0]
+    if fine:
+        return f"{CAT_CODE[cat]}{tb[0]}.{tb[1]}.{tb[2]}"
     return f"{CAT_CODE[cat]}{tb[0]}.{tb[1]}"
 
 
@@ -138,7 +150,7 @@ class Deal:
         self.cfg, self.deck = cfg, cfg.deck
         self.order = order
         self.hands = [order[0:5], order[5:10]]
-        self._pre = [pre_bucket(self.deck, h) for h in self.hands]
+        self._pre = [pre_bucket(self.deck, h, cfg.fine) for h in self.hands]
         self._final = {}
 
     def pre(self, p):
@@ -152,7 +164,7 @@ class Deal:
             h0 = keep_cards(self.deck, self.hands[0], k0) + self.order[10:10 + k0]
             h1 = keep_cards(self.deck, self.hands[1], k1) + self.order[10 + k0:10 + k0 + k1]
             scores = (self.deck.score(h0), self.deck.score(h1))
-            buckets = (post_bucket(self.deck, h0), post_bucket(self.deck, h1))
+            buckets = (post_bucket(self.deck, h0, self.cfg.fine), post_bucket(self.deck, h1, self.cfg.fine))
             self._final[draws] = ((h0, h1), scores, buckets)
         return self._final[draws]
 
@@ -170,7 +182,8 @@ def contributions(cfg, r1, r2):
 
 
 def showdown_utility(cfg, r1, r2, scores):
-    stake = contributions(cfg, r1, r2)[0]        # equal at showdown
+    # equal at showdown
+    stake = contributions(cfg, r1, r2)[0]
     if scores[0] > scores[1]:
         return stake
     if scores[0] < scores[1]:
