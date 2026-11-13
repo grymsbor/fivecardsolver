@@ -14,8 +14,9 @@ from collections import Counter
 from functools import lru_cache
 from itertools import combinations
 
+# weakest first
 STANDARD_ORDER = ["High card", "One pair", "Two pair", "Three of a kind", "Straight",
-                  "Flush", "Full house", "Four of a kind", "Straight flush"]   # weakest first
+                  "Flush", "Full house", "Four of a kind", "Straight flush"]
 MADE = ["Straight", "Flush", "Full house", "Four of a kind", "Straight flush"]
 RANK_CHARS = "23456789TJQKA"
 
@@ -29,7 +30,7 @@ class Deck:
         self.cards = list(range(self.size))
         self.straights = self._straight_sets()
         self.category_counts = self._count_categories()
-        self.order = self._ranking()                     # weakest first
+        self.order = self._ranking()
         self.strength = {c: i for i, c in enumerate(self.order)}
         self._table = None
 
@@ -50,9 +51,11 @@ class Deck:
         n = self.n_ranks
         s = {frozenset(range(lo, lo + 5)): lo + 4 for lo in range(n - 4)}
         if n > 5:
-            s[frozenset([n - 1, 0, 1, 2, 3])] = 3
+            # ace plays low; top card is rank 3
+        s[frozenset([n - 1, 0, 1, 2, 3])] = 3
         return s
 
+    # --- categorisation ---
     def category(self, hand):
         ranks = [self.rank(c) for c in hand]
         counts = sorted(Counter(ranks).values(), reverse=True)
@@ -81,7 +84,8 @@ class Deck:
 
     def _ranking(self):
         made = sorted(MADE, key=lambda c: (-self.category_counts[c], STANDARD_ORDER.index(c)))
-        return STANDARD_ORDER[:4] + made                 # rarest made hand last (strongest)
+        # rarest made hand last (strongest)
+        return STANDARD_ORDER[:4] + made
 
     # --- full evaluation with tie-breaks ---
     def evaluate(self, hand):

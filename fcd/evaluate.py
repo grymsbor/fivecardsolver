@@ -57,17 +57,20 @@ class GreedyAgent:
 
     def __call__(self, deal, r1, d, r2, p, acts):
         deck = deal.deck
-        if acts[0].isdigit():                                    # draw decision
+        # draw decision
+        if acts[0].isdigit():
             cat = deck.category(deal.hands[p])
             k = self.DRAW.get(cat, 0)
             if cat == "High card" and deal.pre(p).endswith("+d"):
                 k = 1
             return _pick(acts, [str(k)])
-        if len(d) < 2:                                           # before the draw
+        # before the draw
+        if len(d) < 2:
             cat = deck.category(deal.hands[p])
             strong = deck.strength[cat] >= deck.strength["Two pair"]
             ok = strong or cat == "One pair" or deal.pre(p).endswith("+d")
-        else:                                                    # after the draw
+        # after the draw
+        else:
             (hands, _, _) = deal.final((int(d[0]), int(d[1])))
             cat = deck.category(hands[p])
             strong = deck.strength[cat] >= deck.strength["Two pair"]
@@ -111,7 +114,8 @@ def summarise(xs):
     sd = math.sqrt(sum((x - m) ** 2 for x in xs) / (n - 1))
     se = sd / math.sqrt(n)
     z = m / se if se > 0 else 0.0
-    p = math.erfc(abs(z) / math.sqrt(2))                 # two-sided, normal approx.
+    # two-sided, normal approx.
+    p = math.erfc(abs(z) / math.sqrt(2))
     return {"mean": m, "sd": sd, "se": se, "z": z, "p": p, "n": n}
 
 
@@ -134,7 +138,8 @@ def behaviour(cfg, agent, deals):
     - first post-draw bet by final category (P0 first to act; P1 after a check),
     - P1's response to a post-draw bet, split by how many cards P0 drew."""
     draws = defaultdict(lambda: defaultdict(float))
-    bets = defaultdict(lambda: [0.0, 0.0])               # [weight, bet weight]
+    # [weight, bet weight]
+    bets = defaultdict(lambda: [0.0, 0.0])
     resp = defaultdict(lambda: defaultdict(float))
 
     def walk(deal, r1, d, r2, reach):

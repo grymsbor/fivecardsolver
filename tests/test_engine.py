@@ -21,7 +21,8 @@ def test_52_card_counts_match_proposal_appendix():
 
 def test_reduced_deck_ranking_rule():
     assert Deck(13).order[-4:] == ["Flush", "Full house", "Four of a kind", "Straight flush"]
-    assert Deck(9).order[-4:] == ["Full house", "Flush", "Four of a kind", "Straight flush"]  # six-plus
+    # six-plus deck
+    assert Deck(9).order[-4:] == ["Full house", "Flush", "Four of a kind", "Straight flush"]
     assert Deck(6).order[:4] == ["High card", "One pair", "Two pair", "Three of a kind"]
 
 
@@ -32,10 +33,13 @@ def test_scores_are_consistent_with_categories():
 
 
 def test_wheel_is_lowest_straight():
-    d = Deck(6)                                # ranks 9 T J Q K A -> ids 0..5
+    # ranks 9 T J Q K A -> ids 0..5
+    d = Deck(6)
     c = lambda r, s: r * 4 + s
-    wheel = [c(5, 0), c(0, 1), c(1, 2), c(2, 3), c(3, 0)]   # A 9 T J Q
-    top = [c(1, 0), c(2, 1), c(3, 2), c(4, 3), c(5, 0)]     # T J Q K A
+    # A 9 T J Q
+    wheel = [c(5, 0), c(0, 1), c(1, 2), c(2, 3), c(3, 0)]
+    # T J Q K A
+    top = [c(1, 0), c(2, 1), c(3, 2), c(4, 3), c(5, 0)]
     assert d.category(wheel) == d.category(top) == "Straight"
     assert d.score(top) > d.score(wheel)
 
