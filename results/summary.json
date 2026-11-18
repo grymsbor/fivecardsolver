@@ -380,6 +380,11 @@
   "Linear only": -0.5031594846844728,
   "External sampling": -0.6501718158429598
  },
+ "scaling_slopes": {
+  "CFR (base buckets)": -0.5783656843964492,
+  "CFR (fine buckets)": -0.5610426533316799,
+  "External sampling": -0.6501718158429598
+ },
  "final": {
   "cfr20_s0": {
    "config": "20-card",

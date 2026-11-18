@@ -260,10 +260,63 @@ def fig_kuhn():
     plt.close(fig)
 
 
+def fig_scaling(summary):
+    """Exploitability against iterations with a T^(-1/2) reference.
+
+    (a) log-log curves with least-squares slopes and a -1/2 guide;
+    (b) sqrt(T) * exploitability, which is flat under exact 1/sqrt(T) scaling.
+    """
+    runs = [("CFR (base buckets)", "cfr24", ("#000000", "o", "-")),
+            ("CFR (fine buckets)", "fine24", ("#7f7f7f", "s", "--")),
+            ("External sampling", "es24", STYLE["External sampling"])]
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.2))
+    for label, prefix, (c, m, ls) in runs:
+        pts = curve_stats(prefix)
+        if len(pts) < 2:
+            continue
+        k = slope(pts)
+        summary.setdefault("scaling_slopes", {})[label] = k
+        xs = [p[0] for p in pts]
+        ys = [p[1] for p in pts]
+        lo = [p[1] - p[2] for p in pts]
+        hi = [p[3] - p[1] for p in pts]
+        axes[0].errorbar(xs, ys, yerr=[lo, hi], color=c, marker=m, ls=ls, ms=4, capsize=2,
+                         label=f"{label}: slope {k:.2f}, n={pts[0][4]}")
+        # -1/2 guide through the geometric mean of the curve
+        gx = math.exp(st.mean(math.log(x) for x in xs))
+        gy = math.exp(st.mean(math.log(y) for y in ys))
+        guide_x = [xs[0] / 1.3, xs[-1] * 1.3]
+        axes[0].plot(guide_x, [gy * (gx / x) ** 0.5 for x in guide_x], color="#bfbfbf", lw=1,
+                     ls=":", zorder=0)
+        r = [y * x ** 0.5 for x, y in zip(xs, ys)]
+        rlo = [(p[1] - p[2]) * p[0] ** 0.5 for p in pts]
+        rhi = [(p[3] - p[1]) * p[0] ** 0.5 for p in pts]
+        axes[1].errorbar(xs, r, yerr=[rlo, rhi], color=c, marker=m, ls=ls, ms=4, capsize=2,
+                         label=label)
+    axes[0].plot([], [], color="#bfbfbf", lw=1, ls=":", label=r"$T^{-1/2}$ reference")
+    axes[0].set_xscale("log")
+    axes[0].set_yscale("log")
+    axes[0].set_xlabel("Iterations $T$")
+    axes[0].set_ylabel("Exploitability lower bound (chips/hand)")
+    axes[0].set_title(r"(a) Exploitability vs iterations (24-card)")
+    axes[0].legend(fontsize=8)
+    plain_log_axes(axes[0])
+    axes[1].set_xscale("log")
+    axes[1].set_ylim(bottom=0)
+    axes[1].set_xlabel("Iterations $T$")
+    axes[1].set_ylabel(r"$\sqrt{T}\times$ exploitability")
+    axes[1].set_title(r"(b) Flat line $\Leftrightarrow$ $1/\sqrt{T}$ scaling")
+    axes[1].legend(fontsize=8)
+    fig.tight_layout()
+    fig.savefig(f"{FIG}/final_scaling.png", dpi=170)
+    plt.close(fig)
+
+
 def main():
     os.makedirs(FIG, exist_ok=True)
     summary = {}
     fig_variants(summary)
+    fig_scaling(summary)
     final_table(summary)
     fig_decks(summary)
     behaviour(summary)
